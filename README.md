@@ -40,6 +40,8 @@ Template by [bootstrapious](https://bootstrapious.com/p/agency-portfolio-theme)
 
 ![](pics/problem.png)
 
+![](pics/eda3.png)
+
 ![](pics/eda1.png)
 
 ![](pics/eda2.png)
