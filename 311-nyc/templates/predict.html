@@ -1,0 +1,203 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<section id="predict" class="bg-gray">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-7">
+        <header class="text-center mb-5">
+          <h2 class="lined text-uppercase">Predict</h2>
+        </header>
+        <p class="lead">Datasets Used</p>
+        <p>The datasets used for modelling are NYC311 and PLUTO, merged on the same incident address. The final features used are:
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Feature</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>month</td>
+                <td>the month the complaint happens</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>OfficeArea</td>
+                <td>an estimate of the exterior dimensions of the portion of the structure(s) allocated for office use.</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>GarageArea</td>
+                <td>an estimate of the exterior dimensions of the portion of the structure(s) allocated for garage use.</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>StrgeArea</td>
+                <td>an estimate of the exterior dimensions of the portion of the structure(s) allocated for storage use.</td>
+              </tr>
+              <tr>
+                <th scope="row">5</th>
+                <td>ResArea</td>
+                <td>an estimate of the exterior dimensions of the portion of the structure(s) allocated for residential use.</td>
+              </tr>
+              <tr>
+                <th scope="row">6</th>
+                <td>BldgArea</td>
+                <td>the total gross area in square feet.</td>
+              </tr>
+              <tr>
+                <th scope="row">7</th>
+                <td>OtherArea</td>
+                <td>an estimate of the exterior dimensions of the portion of the structure(s) allocated for other than Residential, Office, Retail, Garage, Storage, Loft or Factory use.</td>
+              </tr>
+              <tr>
+                <th scope="row">8</th>
+                <td>NumFloors</td>
+                <td>in the tallest building on the tax lot, the number of full and partial stories starting from the ground floor.</td>
+              </tr>
+              <tr>
+                <th scope="row">9</th>
+                <td>UnitsTotal</td>
+                <td>the sum of residential and non-residential (offices, retail stores, etc.) units in all buildings on the tax lot.</td>
+              </tr>
+              <tr>
+                <th scope="row">10</th>
+                <td>AssessTot</td>
+                <td>the tentative assessed total value for Fiscal Year 2018.</td>
+              </tr>
+              <tr>
+                <th scope="row">11</th>
+                <td>hourbin</td>
+                <td>the hour time the complaint happens, mapped into early morning (0-5), morning (6-10), afternoon (11-15), and evening (16-23).</td>
+              </tr>
+              <tr>
+                <th scope="row">12</th>
+                <td>bldgperlot</td>
+                <td>building area per lot area</td>
+              </tr>
+            </tbody>
+          </table>
+        </p>
+      </div>
+
+      <div class="col-lg-7"></div>
+    </div>
+  </div>
+    </section>
+   
+      <section id="tables">
+        <div id="tables2" class="container">
+      <div class="col-lg -auto">
+        <div class="chart" id="table1">
+          <script>
+              var graphs = {{ plot_table | safe}};
+              Plotly.plot('table1',graphs,{});
+          </script>
+        </div>
+      </div>
+      </div>
+</section>
+
+
+
+<section id="predictdesc" class="bg-gray">
+  <div id="predictmap" class="container">
+    <div class="row mb-5">
+      <div class="col-lg-8">
+        <p class="lead">Heat Complaints Map</p>
+        <p>The map below shows the distribution of HEAT/HOT WATER complaints in NYC at zipcode level. Note that the building database used in this map is based on a smaller subset containing only 20k rows so there is far fewer buildings in each zipcode area than the actual number.</p>
+      </div>
+  
+      <div class="col-lg-4">
+        <!-- emptyyy -->
+      </div>
+
+      {% if info != None %}
+
+    <div class="col-lg-8">
+      <p>Interpretation: According to our model, in the {{ focus_waktu }} of a day in {{ info['cal'] }} in the area with zip code {{ focus_zipcode }} there are {{ info['heat'] }} heat complaints from total of {{ info['total'] }} buildings.</p>
+    </div>
+    <div class="col-lg-4">
+      <!-- emptyyy -->
+    </div>
+{% endif %}
+  
+  <div class="col-lg-2">
+  <form method="POST" action="{{url_for('predict_page', _anchor='predictdesc')}}" id="form4">
+  
+  <!-- <div class="col-2"> -->
+    
+      
+      <p class="text-center lead">zipcode</p>
+      <select class="form-control" name="zipcode">
+  
+        {% for drop in drop_zipcode %}
+            {% if focus_zipcode == drop[0] %}
+                return '<option value={{drop[0]}} selected>{{drop[1]}}</option>'
+            {% else %}
+                return '<option value={{drop[0]}}>{{drop[1]}}</option>'
+            {% endif %}
+        {% endfor %}
+      </select>
+      
+      <p></p>
+        <p class="text-center lead">hour</p>
+        <select class="form-control" name="waktu">
+          
+            {% for drop in drop_waktu %}
+                {% if focus_waktu == drop[0] %}
+                    return '<option value="{{drop[0]}}" selected>{{drop[1]}}</option>'
+                {% else %}
+                    return '<option value="{{drop[0]}}">{{drop[1]}}</option>'
+                {% endif %}
+            {% endfor %}
+        </select>
+        
+        <p></p>
+
+        <p class="text-center lead">month</p>
+        <select class="form-control" name="bulan">
+          
+            {% for drop in drop_bulan %}
+                {% if focus_bulan == drop[0] %}
+                    return '<option value="{{drop[0]}}" selected>{{drop[1]}}</option>'
+                {% else %}
+                    return '<option value="{{drop[0]}}">{{drop[1]}}</option>'
+                {% endif %}
+            {% endfor %}
+        </select>
+
+        <p></p>
+    
+  <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  </div>
+  
+         
+  
+  
+  
+  
+  <div class="col-lg-10">
+    <div class="chart" id="plot7">
+      <script>
+          var graphs = {{ plot_scatterpred | safe}};
+          Plotly.plot('plot7',graphs,{});
+      </script>
+    </div>
+  </div>
+
+
+
+  </div>
+  </div>
+
+</section>
+
+{% endblock content %}

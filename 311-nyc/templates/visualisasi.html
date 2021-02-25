@@ -1,0 +1,238 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+
+    <!-- About Section-->
+    <section id="about" class="about">
+      <div class="container">
+        <header class="text-center mb-5">
+          <h2 class="lined text-uppercase">Problem Statement</h2>
+        </header>
+        <div class="row mb-5">
+          <div class="col-lg -auto">
+            
+            <p class="lead">About NYC311</p>
+            <p>NYC311 by the New York City government provides the public with government and non-emergency services. Complaints will be forwarded to various agencies such as local governments, public utilities, and other public services. Citizens can file a complaint about various problem, such as illegal parking, noise, heating, and apartment maintenance. The complaints are coming from five boroughs, which are Queens, Brooklyn, Bronx, Staten Island, and Manhattan.</p>
+            <p class="lead">Housing and Buildings Complaints</p>
+            <p>Department of Housing Preservation and Development (HPD) is the agency responsible to process the complaints related to housing and building. HPD fields most reports, <a href="https://council.nyc.gov/data/311-agency/" target="_blank">second only to the NYC Police Department</a>.</p>
+            <p>HPD is seeking help to manage the large volume of complaints by focusing on the most pressing complaint and determine the possibility of the complaints. This analysis provides insight to the trends of the complaint received by HPD.</p>
+            <p>We also investigate the relationship between building characteristics with the complaint type of our focus.</p>
+
+<!--
+            <div class="row">
+              <div class="col-lg-6">
+                <ul class="mb-0">
+                  <li>considered invitation</li>
+                  <li>put rest and must set</li>
+                  <li>Estate moment he at on</li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul class="mb-0">
+                  <li>considered invitation</li>
+                  <li>put rest and must set</li>
+                  <li>Estate moment he at on</li>
+                </ul>
+              </div>
+            </div>
+-->
+          </div>
+          <div class="col-lg-6"><img src="../static/img/totalcall.png" alt="..." class="img-fluid"></div>
+          
+        </div>
+
+        <div class="row"> 
+          <div class="col-lg-6">  
+          <p class="lead">Datasets Used</p></div> 
+          <div class="col-lg-6"></div>
+          <div class="col-lg-6"> 
+            
+            <h5 class="text-uppercase font-weight-bold"><i class="fas fa-arrows-alt mr-2"> </i>NYC 311 Service Requests</h5>
+            <p>original source from <a href="https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9" target="_blank">NYC OpenData</a></p>
+            <p>data only related to HPD, compiled and uploaded to server by edX Data Science and Machine Learning Capstone Project course <a href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DS0720EN-SkillsNetwork/labs/Module%201/data/311_Service_Requests_from_2010_to_Present_min.csv" target="_blank">(2.37 GB)</a></p>
+          </div>
+          <div class="col-lg-6"> 
+            <h5 class="text-uppercase font-weight-bold"><i class="far fa-image mr-2"> </i>PLUTO Dataset</h5>
+            <p>The Primary Land Use Tax Lot Output by NYC Department of City Planning <a href="https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page" target="_blank">(download here)</a></p>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- Text Section 2 visualisasi-->
+    <section id="visualisasi" class="bg-gray">
+      <div class="container">
+        <header class="text-center mb-5">
+          <h2 class="lined text-uppercase">Exploratory Data Analysis</h2>
+        </header>
+        <div class="row">
+          <div class="col-lg-6">
+            <p>The visualization in this page is made based on a smaller dataset of 180k rows, sampled randomly, from 2015 to 2019.</p>
+
+            <p>There are 14 types of complaints under Housing and Buildings category, with HEAT/HOT WATER having the highest number of complaints. This type of complaint comprises 37.9% of the total complaints on housing and buildings. </p>
+            
+            <p>Building owners are required to meet the heat requirements according to the law. This includes residential building, commercial building, and other public facilities such as child care, nursing home, homeless shelter, and public school. When the heat requirements are not met, citizens can file a complaint. The NYC311 Service does not serve complaints coming from private homes, apartments, and other residential spaces.</p>
+          </div>
+          <div class="col-lg-6">
+            <p>Bronx has the highest number of HEAT/HOT WATER complaints from 2015 - 2019, followed closely with Brooklyn. On the other hand, Bronx only has <a href="https://data.cityofnewyork.us/City-Government/NYC-Population-by-Borough/h2bk-zmw6/data" target="_blank">population of 2.7 million</a>, the fourth highest after Brooklyn, Queens, and Manhattan. This means the heat complaint in Bronx has the highest density compared in the other borough. </p>
+            <p><img src="../static/img/nycpop.png" alt="..." class="img-fluid"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+<section id="visualisasidanteks" class="bg-gray">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-5">
+        <p class="lead">Top 10 Complaints in 2015 - 2019</p>
+        <p>HEAT/HOT WATER complaints made up 37.5% of total houses and buildings complaints.</p>
+      </div>
+
+   
+
+
+      <div class="col-lg-7">
+        <div class="chart" id="plot1">
+          <script>
+              var graphs = {{ plot_top10 | safe}};
+              Plotly.plot('plot1',graphs,{});
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<div id="visualisasi2" class="container">
+  <div class="row mb-5">
+    <div class="col-lg-4">
+      <p class="lead">Heat Complaints in Each Borough</p>
+      <p>Bronx has the highest HEAT/HOT WATER complaints almost every year between 2015 and 2019, except in 2018.</p>
+    </div>
+  
+
+
+<form method="POST" action="{{url_for('borough_fn',  _anchor='plot2')}}" id="form">
+  <!-- <div class="my-5 row d-flex justify-content-around"> -->
+      <!-- Dropdwon Jenis Plot -->
+      
+      <!-- Menu dropdown ini akan menampilkan list menu jenis-jenis plot yang ada -->
+      <!-- Di sini kita akan melakukan looping terhadap list yang dikirim dari API -->
+      <!-- list tersebut adalah drop_plot -->
+
+      <!-- Dropdwon Sumbu X -->
+<!-- <div class="col-2"> -->
+  <div class="col-lg-auto">
+  <p class="text-center lead">year</p>
+  <select class="form-control" name="year" onchange="form.submit()">
+      {% for drop in drop_year %}
+          {% if focus_year == drop[0] %}
+              return '<option value={{drop[0]}} selected>{{drop[1]}}</option>'
+          {% else %}
+              return '<option value={{drop[0]}}>{{drop[1]}}</option>'
+          {% endif %}
+      {% endfor %}
+  </select>
+</div>
+</form>
+
+
+<div class="col">
+  <div class="chart" id="plot2">
+    <script>
+        var graphs = {{ plot_borough | safe}};
+        Plotly.plot('plot2',graphs,{});
+    </script>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div id="visualisasi3" class="container">
+  <div class="row mb-5">
+    <div class="col-lg-8">
+      <p class="lead">Complaints Map</p>
+      <p>The map below shows the distribution of total and HEAT/HOT WATER complaints in NYC at zipcode level.</p>
+    </div>
+
+    <div class="col-lg-4">
+      <!-- emptyyy -->
+    </div>
+  <!--
+  </div>
+-->
+
+<div class="col-lg-2">
+<form method="POST" action="{{url_for('scattermap_fn', _anchor='visualisasi3')}}" id="form2">
+
+<!-- <div class="col-2"> -->
+  
+    
+    <p class="text-center lead">year</p>
+    <select class="form-control" name="year2">
+
+      {% for drop in drop_year2 %}
+          {% if focus_year2 == drop[0] %}
+              return '<option value={{drop[0]}} selected>{{drop[1]}}</option>'
+          {% else %}
+              return '<option value={{drop[0]}}>{{drop[1]}}</option>'
+          {% endif %}
+      {% endfor %}
+    </select>
+    
+    <p></p>
+      <p class="text-center lead">column</p>
+      <select class="form-control" name="column">
+        
+          {% for drop in drop_column %}
+              {% if focus_column == drop[0] %}
+                  return '<option value="{{drop[0]}}" selected>{{drop[1]}}</option>'
+              {% else %}
+                  return '<option value="{{drop[0]}}">{{drop[1]}}</option>'
+              {% endif %}
+          {% endfor %}
+      </select>
+      
+      <p></p>
+  
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+</div>
+
+       
+
+
+
+
+<div class="col-lg -auto">
+  <div class="chart" id="plot3">
+    <script>
+        var graphs = {{ plot_scattermap | safe}};
+        Plotly.plot('plot3',graphs,{});
+    </script>
+  </div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+
+        
+
+
+
+
+
+{% endblock content %}

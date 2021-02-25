@@ -1,0 +1,107 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<section id="heatpage" class="bg-gray">
+  <div class="container">
+    <header class="text-center mb-5">
+      <h2 class="lined text-uppercase">Heat Pattern</h2>
+    </header>
+    <div class="row">
+      <div class="col-lg-6">
+        <p>We can observe patterns in heat complaints throughout the year, week, and day. The <a href="https://portal.311.nyc.gov/article/?kanumber=KA-01036#:~:text=You%20can%20make%20a%20complaint,June%201%20and%20September%2030" target="_blank">city regulation</a> demands building owners to provide tenants with minimum heat requirements between Oct 1st and May 31. The heat requirements vary based on the hour and outside temperature. During work hours (6 AM - 10 PM) the heat requirement (minimum 68 degrees) is applied only if the outside temperature falls below 55 degrees. Outside that time window (during nighttime) heat should always meet the required temperature (minimum 62 degrees) without no specification about outside temperature.</p>
+        <p>The higher minimum temperature requirement during work hours (starts at 6 AM) explains the daily HEAT/HOT WATER complaint pattern which was very low during nighttime (0 - 5 AM) and started to rise at 6 AM time. This also explains the reason the number of HEAT/HOT WATER complaints stayed high even after normal work hour ends (~4 PM), while the other complaint types kept decresing until it reached nighttime.</p>
+
+
+      </div>
+      <div class="col-lg-6">
+        <p>The regulation specifies heat requirement during the day, which applies throughout the week during Oct 1 - May 31. Since there is no specific regulation on heat requirement during the week, there is no difference in number of HEAT/HOT WATER complaints throughout the week, even during weekend. This suggests that most HEAT/HOT WATER complaints come from residential building, unlike the other complaints that have lower number during the weekend.</p>
+      
+        <p>While the other type of complaints have a relatively steady number of complaints throughout the year, HEAT/HOT WATER complaint has lowest number from late spring (June) until early fall (Sep). The HEAT/HOT WATER complaints about excessive heat are accepted only during this period.</p>
+      </div>
+    </section>
+
+<section id="heatpage2">
+      <form action="{{url_for('plotinterval_fn',  _anchor='heatpage2')}}" id="form3">
+
+        <!-- <div class="col-2"> -->
+          <div class="row mb-5">
+
+            <div class="col-lg-4"></div>
+
+            <div class="col-lg-2">
+          <p class="text-center lead">interval</p>
+        </div>
+
+          <div class="col-lg-2">
+          <select class="form-control" name="interval" onchange="form.submit()">
+              {% for drop in drop_interval %}
+                  {% if focus_interval == drop[0] %}
+                      return '<option value={{drop[0]}} selected>{{drop[1]}}</option>'
+                  {% else %}
+                      return '<option value={{drop[0]}}>{{drop[1]}}</option>'
+                  {% endif %}
+              {% endfor %}
+          </select>
+            </div>
+          </div>
+        </form>
+
+        <div class="col-lg-4"></div>
+
+        <div class="col-lg-12">
+          <div class="chart" id="plot4">
+            <script>
+                var graphs = {{ plot_interval | safe}};
+                Plotly.plot('plot4',graphs,{});
+            </script>
+          </div>
+        </div>
+    </div>
+
+        <div class="container">  
+        <div class="row mb-5">
+        <div class="col-lg-4">
+          <p class="lead">Trends Throughout the Year</p>
+          <p>We can look into heat complaint trends throughout the year by comparing the number of complaints and the average temperature in NYC in 2019. As expected, HEAT/HOT WATER complaints started happening in fall and peaked in January when the temperature hit the lowest. The highest peak of heat complaints happened in the same day during the lowest peak of temperature, which were Jan 21st and 31st. (dataset from <a href="https://www.ncdc.noaa.gov/cdo-web/search" target="_blank">NOAA</a>)</p>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="chart" id="plot5">
+            <script>
+                var graphs = {{ plot_temp | safe}};
+                Plotly.plot('plot5',graphs,{});
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container">  
+      <div class="row mb-5">
+      <div class="col-lg-3">
+        <p class="lead">Complaint Volume Throughout the Day</p>
+        <p>At any given hour, HEAT/HOT WATER has the highest number of complaints among the other under houses and buildings complaints.</p>
+      </div>
+
+      <div class="col-lg-9">
+        <div class="chart" id="plot6">
+          <script>
+              var graphs = {{ plot_stream | safe}};
+              Plotly.plot('plot6',graphs,{});
+          </script>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+  </div>
+</section>
+
+
+{% endblock content %}
