@@ -34,6 +34,7 @@ during a day on a certain month, given its characteristics
 
 ## Flask Dashboard
 
+(Update 210312) This dashboard is no longer running on PYAW, moved to [Heroku](https://nyc311-azka.herokuapp.com/)
 (Update 210226) This dashboard is now running live on [PythonAnywhere](http://azukacchi.pythonanywhere.com/). Setting up Flask on PythonAnywhere tutorial [here](https://help.pythonanywhere.com/pages/Flask/).
 
 Template by [bootstrapious](https://bootstrapious.com/p/agency-portfolio-theme) 
