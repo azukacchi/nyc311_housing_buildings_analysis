@@ -34,21 +34,31 @@ during a day on a certain month, given its characteristics
 
 ## Flask Dashboard
 
+Tutorial [Deploy Flask Application to PythonAnywhere or Heroku on my dev.to](https://dev.to/azukacchi/deploy-flask-application-to-pythonanywhere-or-heroku-without-database-3l8i)
+
 (Update 210312) This dashboard is no longer running on PYAW, moved to [Heroku](https://nyc311-azka.herokuapp.com/)
 
-(Update 210226) This dashboard is now running live on [PythonAnywhere](http://azukacchi.pythonanywhere.com/). Setting up Flask on PythonAnywhere tutorial [here](https://help.pythonanywhere.com/pages/Flask/).
+(Update 210226) This dashboard is now running live on [PythonAnywhere](http://azukacchi.pythonanywhere.com/).
 
 Template by [bootstrapious](https://bootstrapious.com/p/agency-portfolio-theme) 
 
+### Home page
+
 ![](pics/home.png)
 
+### Problem Statement page
+
 ![](pics/problem.png)
+
+### EDA page
 
 ![](pics/eda3.png)
 
 ![](pics/eda1.png)
 
 ![](pics/eda2.png)
+
+### Heat Pattern page
 
 ![](pics/pattern1.png)
 
@@ -57,6 +67,8 @@ Template by [bootstrapious](https://bootstrapious.com/p/agency-portfolio-theme)
 ![](pics/pattern3.png)
 
 ![](pics/pattern4.png)
+
+### Predict page
 
 ![](pics/pred1.png)
 
